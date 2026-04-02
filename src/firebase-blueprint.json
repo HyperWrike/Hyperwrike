@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "CMSContent": {
+      "title": "CMS Content",
+      "description": "Stores editable text content for the website.",
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The text content of the element."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the content was last updated."
+        }
+      },
+      "required": ["text"]
+    }
+  },
+  "firestore": {
+    "/content/{contentId}": {
+      "schema": "CMSContent",
+      "description": "A collection of editable text elements."
+    }
+  }
+}
