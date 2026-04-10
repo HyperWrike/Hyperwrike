@@ -3,7 +3,6 @@ import React from "react";
 import {
   Mail,
   Phone,
-  MapPin,
   Facebook,
   Instagram,
   Twitter,
@@ -44,17 +43,18 @@ function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
   const contactInfo = [
     {
       icon: <Mail size={18} className="text-[#3ca2fa]" />,
-      text: "hello@hyperwrike.com",
-      href: "mailto:hello@hyperwrike.com",
+      text: "mounesh@hyperwrike.com",
+      href: "mailto:mounesh@hyperwrike.com",
+    },
+    {
+      icon: <Mail size={18} className="text-[#3ca2fa]" />,
+      text: "periyanan@hyperwrike.com",
+      href: "mailto:periyanan@hyperwrike.com",
     },
     {
       icon: <Phone size={18} className="text-[#3ca2fa]" />,
-      text: "+1 (555) 123-4567",
-      href: "tel:+15551234567",
-    },
-    {
-      icon: <MapPin size={18} className="text-[#3ca2fa]" />,
-      text: "San Francisco, CA",
+      text: "Book a Call",
+      href: "https://calendar.app.google/4CYGXdDEzK7Rq9ii8",
     },
   ];
 
