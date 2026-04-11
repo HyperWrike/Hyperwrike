@@ -5,6 +5,13 @@
 @theme {
   --font-serif: "Instrument Serif", serif;
   --font-sans: "Inter", sans-serif;
+
+  /* Design tokens — use these instead of arbitrary hex values */
   --color-background: #FFFFFF;
+  --color-brand: #000000;
+  --color-accent: #3ca2fa;
+  --color-muted: #6F6F6F;
+  --color-surface-dark: #0F0F11;
+  --color-surface-darker: #050505;
 }
 

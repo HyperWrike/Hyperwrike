@@ -42,17 +42,17 @@ function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
   // Contact info data
   const contactInfo = [
     {
-      icon: <Mail size={18} className="text-[#3ca2fa]" />,
+      icon: <Mail size={18} className="text-accent" />,
       text: "mounesh@hyperwrike.com",
       href: "mailto:mounesh@hyperwrike.com",
     },
     {
-      icon: <Mail size={18} className="text-[#3ca2fa]" />,
+      icon: <Mail size={18} className="text-accent" />,
       text: "periyanan@hyperwrike.com",
       href: "mailto:periyanan@hyperwrike.com",
     },
     {
-      icon: <Phone size={18} className="text-[#3ca2fa]" />,
+      icon: <Phone size={18} className="text-accent" />,
       text: "Book a Call",
       href: "https://calendar.app.google/4CYGXdDEzK7Rq9ii8",
     },
@@ -68,20 +68,21 @@ function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
   ];
 
   return (
-    <footer className="bg-[#0F0F11] relative h-fit overflow-hidden">
+    <footer className="bg-surface-dark relative h-fit overflow-hidden">
       <div className="max-w-7xl mx-auto p-8 md:p-14 z-40 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
           {/* Brand section */}
           <div className="flex flex-col space-y-4">
-            <div 
-              className="flex items-center space-x-2 cursor-pointer group"
+            <button
+              aria-label="Hyperwrike – back to top"
+              className="flex items-center space-x-2 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface-dark rounded"
               onClick={onLogoClick}
             >
-              <span className="text-[#3ca2fa] text-3xl font-extrabold group-hover:rotate-12 transition-transform">
-                <Zap className="w-8 h-8 fill-[#3ca2fa]" />
+              <span className="text-accent text-3xl font-extrabold group-hover:rotate-12 transition-transform">
+                <Zap className="w-8 h-8 fill-accent" />
               </span>
               <span className="text-white text-3xl font-bold font-serif">Hyperwrike</span>
-            </div>
+            </button>
             <p className="text-sm leading-relaxed text-gray-400">
               Hyperwrike is a modern AI Automation & Custom Software Agency. We build digital havens for deep work and pure flows.
             </p>
@@ -98,7 +99,7 @@ function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
                   <li key={link.label} className="relative">
                     <a
                       href={link.href}
-                      className="text-gray-400 hover:text-[#3ca2fa] transition-colors"
+                      className="text-gray-400 hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded"
                     >
                       {link.label}
                     </a>
@@ -123,7 +124,7 @@ function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="text-gray-400 hover:text-[#3ca2fa] transition-colors"
+                      className="text-gray-400 hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded"
                     >
                       {item.text}
                     </a>
@@ -149,7 +150,7 @@ function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
                 key={label}
                 href={href}
                 aria-label={label}
-                className="hover:text-[#3ca2fa] transition-colors"
+                className="hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded"
               >
                 {icon}
               </a>

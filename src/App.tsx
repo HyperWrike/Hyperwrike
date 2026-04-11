@@ -45,12 +45,14 @@ import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
 const CMSContent = ({ id, defaultText, className, cmsMode, as: Component = 'span' }: { id: string, defaultText: string, className?: string, cmsMode: boolean, as?: any }) => {
   const [text, setText] = useState(defaultText);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, 'content', id), (doc) => {
-      if (doc.exists()) {
-        setText(doc.data().text);
+    const unsub = onSnapshot(doc(db, 'content', id), (snap) => {
+      if (snap.exists()) {
+        setText(snap.data().text);
       }
+      setIsLoaded(true);
     });
     return () => unsub();
   }, [id]);
@@ -86,6 +88,15 @@ const CMSContent = ({ id, defaultText, className, cmsMode, as: Component = 'span
           ID: {id}
         </div>
       </div>
+    );
+  }
+
+  if (!isLoaded && !defaultText) {
+    return (
+      <span
+        className={`inline-block animate-pulse rounded bg-gray-200/70 min-w-[5rem] min-h-[1em] ${className ?? ''}`}
+        aria-hidden="true"
+      />
     );
   }
 
@@ -344,6 +355,7 @@ export default function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [loginData, setLoginData] = useState({ username: '', password: '' });
   const [loginError, setLoginError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -414,6 +426,14 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen w-full bg-white font-sans text-[#000000] selection:bg-[#000000] selection:text-white flex flex-col">
+      {/* Skip to main content – keyboard accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-black focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+      >
+        Skip to main content
+      </a>
+
       {/* CMS Badge */}
       <AnimatePresence>
         {cmsMode && (
@@ -431,14 +451,15 @@ export default function App() {
       </AnimatePresence>
 
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+      <nav aria-label="Main navigation" className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div className="flex justify-between items-center px-6 md:px-8 py-4 md:py-6 max-w-7xl mx-auto w-full">
-          <div 
-            className="text-2xl md:text-3xl tracking-tight font-serif cursor-pointer font-bold text-[#000000]"
+          <button
+            aria-label="Hyperwrike – back to top"
+            className="text-2xl md:text-3xl tracking-tight font-serif font-bold text-[#000000] focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 rounded"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
             Hyperwrike<sup className="text-xs">®</sup>
-          </div>
+          </button>
           
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
@@ -452,15 +473,18 @@ export default function App() {
           <div className="flex items-center gap-4">
             <button 
               onClick={() => scrollTo('audit')}
-              className="hidden sm:block rounded-full px-6 py-2.5 text-sm font-medium bg-[#000000] text-white transition-transform hover:scale-[1.03] active:scale-95"
+              className="hidden sm:block min-h-[44px] rounded-full px-6 py-2.5 text-sm font-medium bg-[#000000] text-white transition-transform hover:scale-[1.03] active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
             >
               Begin Journey
             </button>
             
             {/* Mobile Menu Toggle */}
             <button 
-              className="md:hidden p-2 text-black"
+              className="md:hidden p-2 text-black min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black rounded"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -471,20 +495,23 @@ export default function App() {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
+              id="mobile-menu"
+              role="dialog"
+              aria-label="Mobile navigation menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
             >
               <div className="flex flex-col p-6 gap-4">
-                <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setIsMenuOpen(false); }} className="text-left text-lg font-medium">Home</button>
-                <button onClick={() => scrollTo('services')} className="text-left text-lg font-medium">Studio</button>
-                <button onClick={() => scrollTo('benefits')} className="text-left text-lg font-medium">About</button>
-                <button onClick={() => scrollTo('trust')} className="text-left text-lg font-medium">Journal</button>
-                <button onClick={() => scrollTo('audit')} className="text-left text-lg font-medium">Reach Us</button>
+                <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setIsMenuOpen(false); }} className="text-left text-lg font-medium min-h-[44px] px-2 focus:outline-none focus:ring-2 focus:ring-black rounded">Home</button>
+                <button onClick={() => scrollTo('services')} className="text-left text-lg font-medium min-h-[44px] px-2 focus:outline-none focus:ring-2 focus:ring-black rounded">Studio</button>
+                <button onClick={() => scrollTo('benefits')} className="text-left text-lg font-medium min-h-[44px] px-2 focus:outline-none focus:ring-2 focus:ring-black rounded">About</button>
+                <button onClick={() => scrollTo('trust')} className="text-left text-lg font-medium min-h-[44px] px-2 focus:outline-none focus:ring-2 focus:ring-black rounded">Journal</button>
+                <button onClick={() => scrollTo('audit')} className="text-left text-lg font-medium min-h-[44px] px-2 focus:outline-none focus:ring-2 focus:ring-black rounded">Reach Us</button>
                 <button 
                   onClick={() => scrollTo('audit')}
-                  className="w-full mt-4 rounded-full py-4 text-center font-medium bg-[#000000] text-white"
+                  className="w-full mt-4 min-h-[44px] rounded-full py-4 text-center font-medium bg-[#000000] text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                 >
                   Begin Journey
                 </button>
@@ -494,16 +521,14 @@ export default function App() {
         </AnimatePresence>
       </nav>
 
+      <main id="main-content">
       {/* Hero Section */}
-      <header 
-        className="relative min-h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center px-6 pb-20 md:pb-40"
-        style={{ paddingTop: 'calc(8rem - 75px)' }}
+      <header
+        className="relative min-h-screen w-full overflow-hidden flex flex-col items-center justify-center text-center px-6 pb-20 md:pb-40 pt-[calc(8rem-75px)]"
+        aria-label="Hyperwrike hero"
       >
         {/* Background Video Layer */}
-        <div 
-          className="absolute inset-x-0 bottom-0 z-0 overflow-hidden"
-          style={{ top: '300px' }}
-        >
+        <div className="absolute inset-x-0 bottom-0 top-[300px] z-0 overflow-hidden">
           <video
             ref={videoRef}
             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_083109_283f3553-e28f-428b-a723-d639c617eb2b.mp4"
@@ -517,9 +542,8 @@ export default function App() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto">
-          <h1 
-            className="text-4xl sm:text-6xl md:text-8xl font-serif font-normal tracking-tight text-[#000000] animate-fade-rise"
-            style={{ lineHeight: '1.1', letterSpacing: '-1.5px' }}
+          <h1
+            className="text-4xl sm:text-6xl md:text-8xl font-serif font-normal leading-[1.1] tracking-[-1.5px] text-[#000000] animate-fade-rise"
           >
             <CMSContent id="hero_title" defaultText="Hyperwrike — " cmsMode={cmsMode} />
             <span className="italic text-[#6F6F6F]">
@@ -534,7 +558,7 @@ export default function App() {
           <div className="mt-12 animate-fade-rise-delay-2">
             <button 
               onClick={() => scrollTo('audit')}
-              className="rounded-full px-10 md:px-14 py-4 md:py-5 text-base font-medium bg-[#000000] text-white transition-transform hover:scale-[1.03] active:scale-95"
+              className="min-h-[44px] rounded-full px-10 md:px-14 py-4 md:py-5 text-base font-medium bg-[#000000] text-white transition-transform hover:scale-[1.03] active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
             >
               Begin Journey
             </button>
@@ -561,7 +585,7 @@ export default function App() {
           </p>
           <button 
             onClick={() => scrollTo('audit')}
-            className="rounded-full px-8 md:px-10 py-3 md:py-4 text-base md:text-lg font-medium bg-[#000000] text-white transition-transform hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto"
+            className="min-h-[44px] rounded-full px-8 md:px-10 py-3 md:py-4 text-base md:text-lg font-medium bg-[#000000] text-white transition-transform hover:scale-105 active:scale-95 flex items-center gap-2 mx-auto focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
           >
             Book My Free Call <ArrowRight className="w-5 h-5" />
           </button>
@@ -792,21 +816,56 @@ export default function App() {
             </div>
           </div>
           <div className="bg-white p-6 md:p-10 rounded-3xl text-black shadow-2xl">
-            <form className="space-y-4 md:space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4 md:space-y-6" onSubmit={async (e) => {
+              e.preventDefault();
+              setIsSubmitting(true);
+              await new Promise((r) => setTimeout(r, 1500));
+              setIsSubmitting(false);
+            }}>
               <div>
-                <label className="block text-sm font-bold mb-2">Name *</label>
-                <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors" required />
+                <label htmlFor="contact-name" className="block text-sm font-bold mb-2">Name *</label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black focus:ring-2 focus:ring-black/20 outline-none transition-colors"
+                  required
+                  aria-required="true"
+                />
               </div>
               <div>
-                <label className="block text-sm font-bold mb-2">Business Email *</label>
-                <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors" required />
+                <label htmlFor="contact-email" className="block text-sm font-bold mb-2">Business Email *</label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black focus:ring-2 focus:ring-black/20 outline-none transition-colors"
+                  required
+                  aria-required="true"
+                />
               </div>
               <div>
-                <label className="block text-sm font-bold mb-2">Biggest operational challenge? (one line)</label>
-                <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors" />
+                <label htmlFor="contact-challenge" className="block text-sm font-bold mb-2">Biggest operational challenge? (one line)</label>
+                <input
+                  id="contact-challenge"
+                  type="text"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black focus:ring-2 focus:ring-black/20 outline-none transition-colors"
+                />
               </div>
-              <button className="w-full py-4 bg-black text-white rounded-xl font-bold hover:scale-[1.02] transition-transform active:scale-95">
-                Book My Free Hyperwrike Call →
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full min-h-[44px] py-4 bg-black text-white rounded-xl font-bold hover:scale-[1.02] transition-transform active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+              >
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    <span>Sending…</span>
+                  </>
+                ) : (
+                  'Book My Free Hyperwrike Call →'
+                )}
               </button>
               <p className="text-xs text-gray-500 text-center">
                 Free. Fast. No obligation.
@@ -871,6 +930,8 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      </main>
 
       <HoverFooter onLogoClick={() => setShowLogin(true)} />
     </div>
