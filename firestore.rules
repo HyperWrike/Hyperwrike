@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: content
+    // Document ID: unique key for text element
+    // Fields:
+    //   - text: string (required)
+    //   - updatedAt: timestamp (optional)
+    //
+    // ===============================================================
+
+    match /content/{contentId} {
+      // Allow everyone to read the content to display on the site
+      allow read: if true;
+      
+      // Allow updates only if the user is authenticated (for now, we'll allow all for the prototype)
+      // In a real app, we'd use request.auth != null and check for admin role
+      allow write: if true;
+    }
+  }
+}
