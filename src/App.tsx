@@ -4,18 +4,18 @@
  */
 
 import React, { useEffect, useRef, useState, ReactNode } from 'react';
-import { 
-  Clock, 
-  DollarSign, 
-  TrendingUp, 
-  Cpu, 
-  Layers, 
-  BarChart3, 
-  Handshake, 
-  Bot, 
-  Code, 
-  GitMerge, 
-  Lightbulb, 
+import {
+  Clock,
+  DollarSign,
+  TrendingUp,
+  Cpu,
+  Layers,
+  BarChart3,
+  Handshake,
+  Bot,
+  Code,
+  GitMerge,
+  Lightbulb,
   Plug,
   CheckCircle2,
   ChevronDown,
@@ -33,11 +33,20 @@ import {
   Database,
   Menu,
   X,
-  Save
+  Save,
+  Phone,
+  Wrench,
+  Stethoscope,
+  Home as HomeIcon,
+  Droplet,
+  Car,
+  PlayCircle,
+  Quote
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import HoverFooter from './components/HoverFooter';
 import Testimonials from './components/Testimonials';
+import AIChatbot from './components/AIChatbot';
 import { db } from './firebase';
 import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -336,6 +345,135 @@ const IntegrationMockup = () => (
   </div>
 );
 
+// Contact form — POSTs to /api/contact which relays via Brevo to team@hyperwrike.com
+function ContactForm() {
+  const [form, setForm] = useState({ name: '', email: '', industry: '', challenge: '', company_website: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState<string>('');
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (status === 'loading') return;
+    setStatus('loading');
+    setErrorMsg('');
+    try {
+      const resp = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, source: 'audit-form' }),
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok || !data?.ok) throw new Error(data?.error || 'Submission failed.');
+      setStatus('success');
+      setForm({ name: '', email: '', industry: '', challenge: '', company_website: '' });
+    } catch (err: any) {
+      setStatus('error');
+      setErrorMsg(err?.message || 'Something went wrong. Please email team@hyperwrike.com.');
+    }
+  }
+
+  if (status === 'success') {
+    return (
+      <div className="text-center py-8">
+        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+          <CheckCircle2 className="w-8 h-8 text-green-600" />
+        </div>
+        <h3 className="text-2xl font-bold mb-2">You're in. 🎉</h3>
+        <p className="text-gray-600 mb-6">A Hyperwrike founder will personally reply within 1 business day with next steps and a calendar link.</p>
+        <a
+          href="https://calendar.app.google/WpbBqVNkm1YGfunz5"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-semibold hover:scale-[1.02] transition-transform"
+        >
+          Or book directly now <ArrowRight className="w-4 h-4" />
+        </a>
+        <button
+          onClick={() => setStatus('idle')}
+          className="block mx-auto mt-4 text-xs text-gray-500 underline hover:text-black"
+        >
+          Submit another request
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      className="space-y-4 md:space-y-6"
+      onSubmit={handleSubmit}
+      aria-label="Hyperwrike free consultation request form"
+    >
+      <div className="flex items-center gap-2 mb-2 text-xs font-semibold text-green-600 uppercase tracking-wider">
+        <CheckCircle2 className="w-4 h-4" /> Free · 30 Minutes · No Sales Pitch
+      </div>
+      <div>
+        <label htmlFor="name" className="block text-sm font-bold mb-2">Full Name *</label>
+        <input
+          id="name" name="name" type="text" autoComplete="name" placeholder="Jane Smith"
+          value={form.name} onChange={onChange}
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors" required
+        />
+      </div>
+      <div>
+        <label htmlFor="email" className="block text-sm font-bold mb-2">Business Email *</label>
+        <input
+          id="email" name="email" type="email" autoComplete="email" placeholder="you@company.com"
+          value={form.email} onChange={onChange}
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors" required
+        />
+      </div>
+      <div>
+        <label htmlFor="industry" className="block text-sm font-bold mb-2">Industry *</label>
+        <select
+          id="industry" name="industry" value={form.industry} onChange={onChange} required
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors bg-white"
+        >
+          <option value="" disabled>Select your industry…</option>
+          <option value="hvac">HVAC</option>
+          <option value="dental">Dental</option>
+          <option value="roofing">Roofing</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="car-rental">Car Rental</option>
+          <option value="other">Other / Custom</option>
+        </select>
+      </div>
+      <div>
+        <label htmlFor="challenge" className="block text-sm font-bold mb-2">Biggest bottleneck? (one line)</label>
+        <input
+          id="challenge" name="challenge" type="text" placeholder="e.g. Missing after-hours calls"
+          value={form.challenge} onChange={onChange}
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors"
+        />
+      </div>
+      {/* Honeypot — hidden from humans, bots will fill it */}
+      <input
+        type="text" name="company_website" tabIndex={-1} autoComplete="off"
+        value={form.company_website} onChange={onChange}
+        aria-hidden="true"
+        style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', opacity: 0 }}
+      />
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        className="w-full py-4 bg-black text-white rounded-xl font-bold hover:scale-[1.02] transition-transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:scale-100"
+      >
+        {status === 'loading' ? 'Sending…' : (<>Book My Free AI Automation Call <ArrowRight className="w-5 h-5" /></>)}
+      </button>
+      {status === 'error' && (
+        <p className="text-xs text-red-600 text-center">{errorMsg}</p>
+      )}
+      <p className="text-xs text-gray-500 text-center">
+        Used by HVAC, dental, roofing, plumbing & car rental companies across the US. 100% confidential — we sign NDAs on request.
+      </p>
+    </form>
+  );
+}
+
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoOpacity, setVideoOpacity] = useState(0);
@@ -443,18 +581,19 @@ export default function App() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
             <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-sm font-medium text-[#000000] transition-colors">Home</button>
-            <button onClick={() => scrollTo('services')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">Studio</button>
-            <button onClick={() => scrollTo('benefits')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">About</button>
-            <button onClick={() => scrollTo('trust')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">Journal</button>
-            <button onClick={() => scrollTo('audit')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">Reach Us</button>
+            <button onClick={() => scrollTo('services')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">Services</button>
+            <button onClick={() => scrollTo('industries')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">Industries</button>
+            <button onClick={() => scrollTo('trust')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">Results</button>
+            <button onClick={() => scrollTo('faq')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">FAQ</button>
+            <button onClick={() => scrollTo('audit')} className="text-sm font-medium text-[#6F6F6F] hover:text-[#000000] transition-colors">Contact</button>
           </div>
 
           <div className="flex items-center gap-4">
-            <button 
+            <button
               onClick={() => scrollTo('audit')}
               className="hidden sm:block rounded-full px-6 py-2.5 text-sm font-medium bg-[#000000] text-white transition-transform hover:scale-[1.03] active:scale-95"
             >
-              Begin Journey
+              Book Free Call
             </button>
             
             {/* Mobile Menu Toggle */}
@@ -478,15 +617,16 @@ export default function App() {
             >
               <div className="flex flex-col p-6 gap-4">
                 <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setIsMenuOpen(false); }} className="text-left text-lg font-medium">Home</button>
-                <button onClick={() => scrollTo('services')} className="text-left text-lg font-medium">Studio</button>
-                <button onClick={() => scrollTo('benefits')} className="text-left text-lg font-medium">About</button>
-                <button onClick={() => scrollTo('trust')} className="text-left text-lg font-medium">Journal</button>
-                <button onClick={() => scrollTo('audit')} className="text-left text-lg font-medium">Reach Us</button>
-                <button 
+                <button onClick={() => scrollTo('services')} className="text-left text-lg font-medium">Services</button>
+                <button onClick={() => scrollTo('industries')} className="text-left text-lg font-medium">Industries</button>
+                <button onClick={() => scrollTo('trust')} className="text-left text-lg font-medium">Results</button>
+                <button onClick={() => scrollTo('faq')} className="text-left text-lg font-medium">FAQ</button>
+                <button onClick={() => scrollTo('audit')} className="text-left text-lg font-medium">Contact</button>
+                <button
                   onClick={() => scrollTo('audit')}
                   className="w-full mt-4 rounded-full py-4 text-center font-medium bg-[#000000] text-white"
                 >
-                  Begin Journey
+                  Book Free Call
                 </button>
               </div>
             </motion.div>
@@ -517,35 +657,59 @@ export default function App() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto">
-          <h1 
-            className="text-4xl sm:text-6xl md:text-8xl font-serif font-normal tracking-tight text-[#000000] animate-fade-rise"
-            style={{ lineHeight: '1.1', letterSpacing: '-1.5px' }}
+          {/* Trust/urgency badge above H1 */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/5 border border-black/10 backdrop-blur-sm mb-6 text-xs md:text-sm font-medium text-[#000000] animate-fade-rise">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span>Chennai-based · Serving US small businesses · 3 new client slots this month</span>
+          </div>
+
+          {/* H1 — primary keyword FIRST (Audit Hack #81 + #191) */}
+          <h1
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-normal tracking-tight text-[#000000] animate-fade-rise"
+            style={{ lineHeight: '1.05', letterSpacing: '-1.5px' }}
           >
-            <CMSContent id="hero_title" defaultText="Hyperwrike — " cmsMode={cmsMode} />
+            <CMSContent id="hero_title" defaultText="AI Automation Agency " cmsMode={cmsMode} />
             <span className="italic text-[#6F6F6F]">
-              <CMSContent id="hero_subtitle_italic" defaultText="AI Automation & Custom Software Agency" cmsMode={cmsMode} />
+              <CMSContent id="hero_subtitle_italic" defaultText="in Chennai" cmsMode={cmsMode} />
+            </span>
+            <br />
+            <span className="text-[#000000]">
+              <CMSContent id="hero_title_2" defaultText="Built for US Small Businesses." cmsMode={cmsMode} />
             </span>
           </h1>
-          
-          <p className="text-base sm:text-lg max-w-2xl mx-auto mt-8 leading-relaxed text-[#6F6F6F] animate-fade-rise-delay px-4">
-            <CMSContent id="hero_description" defaultText="We automate your business and build software that scales. Through the noise, we craft digital havens for deep work and pure flows." cmsMode={cmsMode} />
+
+          {/* Conversion subheadline: pain → solution → proof (Audit Hack #3) */}
+          <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto mt-8 leading-relaxed text-[#6F6F6F] animate-fade-rise-delay px-4">
+            <CMSContent id="hero_description" defaultText="Missed calls are killing your revenue. Hyperwrike builds AI voice agents that answer 24/7, book appointments and follow up on leads — so HVAC, dental, roofing, plumbing and car rental businesses never lose another customer." cmsMode={cmsMode} />
           </p>
 
-          <div className="mt-12 animate-fade-rise-delay-2">
-            <button 
+          <div className="mt-12 animate-fade-rise-delay-2 flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <button
               onClick={() => scrollTo('audit')}
-              className="rounded-full px-10 md:px-14 py-4 md:py-5 text-base font-medium bg-[#000000] text-white transition-transform hover:scale-[1.03] active:scale-95"
+              className="rounded-full px-10 md:px-14 py-4 md:py-5 text-base font-medium bg-[#000000] text-white transition-transform hover:scale-[1.03] active:scale-95 flex items-center gap-2 shadow-xl shadow-black/20"
+              aria-label="Book a free 30 minute AI automation call with Hyperwrike"
             >
-              Begin Journey
+              Book My Free 30-Min Call <ArrowRight className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => scrollTo('services')}
+              className="rounded-full px-8 md:px-10 py-4 md:py-5 text-base font-medium bg-transparent text-[#000000] border border-black/20 hover:bg-black hover:text-white transition-colors"
+            >
+              See How It Works
             </button>
           </div>
 
-          <div className="mt-8 text-xs md:text-sm text-[#6F6F6F] flex items-center justify-center gap-4 animate-fade-rise-delay-2">
-            <span>100+ Projects</span>
-            <span>·</span>
-            <span>98% Satisfaction</span>
-            <span>·</span>
-            <span>Worldwide</span>
+          <div className="mt-10 text-xs md:text-sm text-[#6F6F6F] flex flex-wrap items-center justify-center gap-x-4 gap-y-2 animate-fade-rise-delay-2">
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-600" /> 4.7× average ROI</span>
+            <span className="hidden sm:inline">·</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-600" /> Live in 2–4 weeks</span>
+            <span className="hidden sm:inline">·</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-600" /> 100% code ownership</span>
+            <span className="hidden sm:inline">·</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-green-600" /> No vendor lock-in</span>
           </div>
         </div>
       </header>
@@ -568,42 +732,43 @@ export default function App() {
         </div>
       </section>
 
-      {/* Services Section (What We Do) */}
+      {/* Services Section — SEO-targeted (keyword-rich H2) */}
       <section id="services" className="py-20 md:py-32 px-6 md:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 md:mb-20">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-gray-100 text-[#6F6F6F] text-xs font-semibold uppercase tracking-wider mb-6">Services</span>
             <h2 className="text-4xl md:text-6xl font-serif mb-6 text-[#000000]">
-              <CMSContent id="services_title" defaultText="What Hyperwrike Does" cmsMode={cmsMode} />
+              <CMSContent id="services_title" defaultText="AI Voice Agents & Workflow Automation That Pay for Themselves" cmsMode={cmsMode} />
             </h2>
             <p className="text-lg md:text-xl text-[#6F6F6F] max-w-3xl mx-auto leading-relaxed">
-              <CMSContent id="services_subtitle" defaultText="We design, develop, and implement automation tools that help you work smarter, not harder." cmsMode={cmsMode} />
+              <CMSContent id="services_subtitle" defaultText="Hyperwrike is an AI automation agency in Chennai that builds three things US small businesses actually use: AI voice agents, workflow automation, and custom software — delivered in weeks, not months." cmsMode={cmsMode} />
             </p>
           </div>
 
           <div className="space-y-12 md:space-y-24">
-            <ServiceBlock 
-              badge="AI Automation"
-              title="Automate repetitive tasks"
-              description="We help you streamline internal operations by automating manual workflows like data entry, reporting, and approval chains, saving time and cutting down errors."
-              tags={["Internal Task Bots", "100+ Automations", "Error Reduction"]}
+            <ServiceBlock
+              badge="AI Voice Agent"
+              title="Never miss another call. Or another lead."
+              description="Our AI voice agents answer every incoming call 24/7 — even at 2 AM on a Sunday. They qualify leads, book appointments directly into your calendar, answer FAQs, and hand off to your team only when it actually matters. Most clients recover the setup cost from recaptured missed calls in the first 30 days."
+              tags={["Answers in <2s", "Books Appointments", "CRM Sync", "Natural Voice AI"]}
               imageSide="left"
               visual={<TaskListMockup />}
             />
 
-            <ServiceBlock 
-              badge="Custom Software"
-              title="Built for you, not everyone"
-              description="We design and develop bespoke software solutions tailored to your unique business needs. No templates, no compromises — just high-performance technology that scales with you."
-              tags={["Scalable Architecture", "Bespoke Design", "Full Ownership"]}
+            <ServiceBlock
+              badge="Workflow Automation"
+              title="Your entire back-office on autopilot"
+              description="Stop paying humans to copy data between tools. We connect your CRM, phone system, email, calendar, invoicing and reporting into one seamless flow. Lead comes in → qualified → scheduled → invoiced → followed up — without anyone touching a spreadsheet. Save 40–70% on operational costs within 90 days."
+              tags={["CRM + Calendar Sync", "Lead Follow-up", "Invoice Automation", "Daily Reports"]}
               imageSide="right"
               visual={<DashboardMockup />}
             />
 
-            <ServiceBlock 
-              badge="Workflow Automation"
-              title="Your entire operation on autopilot"
-              description="Connect your existing tools and create seamless, automated workflows that keep your business moving 24/7. From lead capture to fulfillment, we automate the journey."
-              tags={["System Integrations", "24/7 Operations", "Seamless Flows"]}
+            <ServiceBlock
+              badge="Custom Software"
+              title="Custom software, built for how your business actually works"
+              description="Off-the-shelf tools force your business to bend around them. We build bespoke software and internal AI tools that match your exact workflow — scalable, secure, and 100% owned by you. No templates, no vendor lock-in, no per-seat pricing nightmares."
+              tags={["100% Ownership", "No Vendor Lock-in", "Scalable Architecture", "Full Source Code"]}
               imageSide="left"
               visual={<IntegrationMockup />}
             />
@@ -707,6 +872,221 @@ export default function App() {
         </div>
       </section>
 
+      {/* INDUSTRIES SECTION — Targets niche keywords (AI voice agent for HVAC/dental/roofing/plumbing/car rental) */}
+      <section id="industries" className="py-20 md:py-32 px-6 md:px-8 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 md:mb-16">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-wider mb-6">Industries We Serve</span>
+            <h2 className="text-4xl md:text-6xl font-serif mb-6 text-[#000000]">
+              <CMSContent id="industries_title" defaultText="AI Voice Agents Built for Your Industry" cmsMode={cmsMode} />
+            </h2>
+            <p className="text-lg md:text-xl text-[#6F6F6F] max-w-3xl mx-auto leading-relaxed">
+              <CMSContent id="industries_subtitle" defaultText="Generic chatbots miss the nuance of a plumbing emergency or a dental no-show. We train industry-specific AI voice agents that know your vocabulary, your workflows, and your customers." cmsMode={cmsMode} />
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: <Wrench className="w-8 h-8" />,
+                title: "AI Voice Agent for HVAC Companies",
+                desc: "Book same-day service calls, dispatch technicians, and capture after-hours emergencies that your competitors miss.",
+                keyword: "HVAC",
+                stat: "+38% booked jobs",
+              },
+              {
+                icon: <Stethoscope className="w-8 h-8" />,
+                title: "AI Voice Agent for Dental Clinics",
+                desc: "Handle new-patient intake, confirm appointments, and cut no-shows with automated reminders and rescheduling.",
+                keyword: "Dental",
+                stat: "-52% no-shows",
+              },
+              {
+                icon: <HomeIcon className="w-8 h-8" />,
+                title: "AI Voice Agent for Roofing Companies",
+                desc: "Qualify storm-damage leads 24/7, book inspections, and never lose a job to a faster-responding competitor again.",
+                keyword: "Roofing",
+                stat: "3× lead response",
+              },
+              {
+                icon: <Droplet className="w-8 h-8" />,
+                title: "AI Voice Agent for Plumbers",
+                desc: "Instantly answer emergency calls, triage urgency, and dispatch the right plumber — even at 3 AM.",
+                keyword: "Plumbing",
+                stat: "24/7 coverage",
+              },
+              {
+                icon: <Car className="w-8 h-8" />,
+                title: "AI Voice Agent for Car Rental",
+                desc: "Automate bookings, upsells, damage-claim intake, and return reminders — across every time zone.",
+                keyword: "Car Rental",
+                stat: "+22% upsell rate",
+              },
+              {
+                icon: <Phone className="w-8 h-8" />,
+                title: "Custom — Built for Your Niche",
+                desc: "Law firms, clinics, contractors, real estate. If your business runs on phone calls, we can automate the first answer.",
+                keyword: "Custom",
+                stat: "Book a scoping call",
+                cta: true,
+              },
+            ].map((ind, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08 }}
+                viewport={{ once: true }}
+                onClick={() => scrollTo('audit')}
+                className={`group p-8 rounded-3xl border transition-all duration-300 cursor-pointer ${
+                  ind.cta
+                    ? 'bg-black text-white border-black hover:bg-gray-900'
+                    : 'bg-white border-gray-200 hover:border-black hover:shadow-2xl hover:-translate-y-1'
+                }`}
+              >
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${
+                  ind.cta ? 'bg-white text-black' : 'bg-black text-white group-hover:bg-blue-600'
+                } transition-colors`}>
+                  {ind.icon}
+                </div>
+                <h3 className={`text-xl font-bold mb-3 leading-tight ${ind.cta ? 'text-white' : 'text-[#000000]'}`}>
+                  {ind.title}
+                </h3>
+                <p className={`text-sm leading-relaxed mb-6 ${ind.cta ? 'text-white/70' : 'text-[#6F6F6F]'}`}>
+                  {ind.desc}
+                </p>
+                <div className={`flex items-center justify-between pt-4 border-t ${ind.cta ? 'border-white/10' : 'border-gray-100'}`}>
+                  <span className={`text-xs font-bold uppercase tracking-wider ${ind.cta ? 'text-white/50' : 'text-[#6F6F6F]'}`}>
+                    {ind.keyword}
+                  </span>
+                  <span className={`text-sm font-semibold flex items-center gap-1 ${ind.cta ? 'text-white' : 'text-[#000000] group-hover:text-blue-600'} transition-colors`}>
+                    {ind.stat} <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Tamil Nadu / Chennai local callout (Audit Section 6) */}
+          <div className="mt-16 text-center">
+            <p className="text-sm text-[#6F6F6F] max-w-2xl mx-auto">
+              Headquartered in <strong className="text-[#000000]">Chennai, Tamil Nadu</strong> · Serving clients across the United States & India · Remote delivery worldwide
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* VIDEO TESTIMONIAL — Above-the-fold trust anchor (Audit: conversion + E-E-A-T) */}
+      <section id="video-testimonial" className="py-20 md:py-32 px-6 md:px-8 bg-black text-white relative overflow-hidden">
+        {/* Background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold uppercase tracking-wider mb-6">
+              <Quote className="w-3 h-3" /> Real Client · Real Results
+            </span>
+            <h2 className="text-4xl md:text-6xl font-serif mb-6">
+              <CMSContent id="video_title" defaultText="Don't take our word for it." cmsMode={cmsMode} />
+            </h2>
+            <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
+              <CMSContent id="video_subtitle" defaultText="Hear directly from a Hyperwrike client about how our AI voice agent transformed their operations." cmsMode={cmsMode} />
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+            {/* Video Player — 9:16 vertical (portrait) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="lg:col-span-2 relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/20 border border-white/10 bg-black mx-auto w-full max-w-sm"
+            >
+              <video
+                src="/client-testimonial.mp4"
+                controls
+                playsInline
+                preload="metadata"
+                poster=""
+                className="w-full h-auto aspect-[9/16] object-cover"
+                aria-label="Hyperwrike client testimonial video from Jammi Pharma"
+              >
+                Your browser does not support the video tag. Please contact us at team@hyperwrike.com.
+              </video>
+              {/* Live verified client badge */}
+              <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-sm text-xs font-medium flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" /> VERIFIED CLIENT
+              </div>
+              {/* Client brand chip overlay */}
+              <div className="absolute bottom-4 left-4 right-4 px-3 py-2 rounded-xl bg-black/70 backdrop-blur-sm text-xs font-medium flex items-center justify-between">
+                <span className="text-white">Jammi Pharma</span>
+                <a
+                  href="https://jammi.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-300 hover:text-blue-200 underline underline-offset-2"
+                >
+                  jammi.in →
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Side trust stack */}
+            <div className="lg:col-span-3 space-y-6">
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <div className="flex gap-1 mb-3">
+                  {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
+                </div>
+                <p className="text-lg leading-relaxed text-white/90 mb-4">
+                  "Hyperwrike's AI automation transformed how we handle customer interactions and order flow. The system paid for itself fast — we're now scaling it across the business."
+                </p>
+                <div className="text-sm text-white/60">
+                  <div className="font-semibold text-white">Jammi Pharma</div>
+                  <div>
+                    Verified Client ·{" "}
+                    <a
+                      href="https://jammi.in"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-2 hover:text-white"
+                    >
+                      jammi.in
+                    </a>
+                    {" "}· Hyperwrike customer since 2026
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-3xl font-serif text-white">4.9★</div>
+                  <div className="text-xs text-white/50 mt-1 uppercase tracking-wider">Avg Rating</div>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-3xl font-serif text-white">4.7×</div>
+                  <div className="text-xs text-white/50 mt-1 uppercase tracking-wider">Average ROI</div>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-3xl font-serif text-white">30 days</div>
+                  <div className="text-xs text-white/50 mt-1 uppercase tracking-wider">Avg Payback</div>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-3xl font-serif text-white">24/7</div>
+                  <div className="text-xs text-white/50 mt-1 uppercase tracking-wider">Coverage</div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => scrollTo('audit')}
+                className="w-full rounded-full py-4 text-base font-semibold bg-white text-black hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
+              >
+                Book My Free Call <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Benefits Section (Why Choose Hyperwrike) */}
       <Section 
         id="benefits" 
@@ -714,12 +1094,16 @@ export default function App() {
         cmsMode={cmsMode}
         titleComponent={
           <div className="text-center mb-4">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-wider mb-6">Why Hyperwrike</span>
             <h2 className="text-3xl md:text-6xl font-serif text-gray-900">
-              <CMSContent id="benefits_title_1" defaultText="Why Choose " cmsMode={cmsMode} />
+              <CMSContent id="benefits_title_1" defaultText="The AI Automation Agency " cmsMode={cmsMode} />
               <span className="text-blue-600 italic">
-                <CMSContent id="benefits_title_2" defaultText="Hyperwrike" cmsMode={cmsMode} />
+                <CMSContent id="benefits_title_2" defaultText="that actually delivers" cmsMode={cmsMode} />
               </span>
             </h2>
+            <p className="text-base md:text-lg text-[#6F6F6F] mt-4 max-w-2xl mx-auto">
+              Most agencies sell strategy slides. We ship working automations that save money, time, and missed revenue — measurable from day one.
+            </p>
           </div>
         }
       >
@@ -770,48 +1154,36 @@ export default function App() {
         
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
           <div>
+            <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold uppercase tracking-wider mb-6">Book Free Call</span>
             <h2 className="text-3xl md:text-6xl font-serif mb-6 md:mb-8">
-              <CMSContent id="audit_title" defaultText="Work With Hyperwrike" cmsMode={cmsMode} />
+              <CMSContent id="audit_title" defaultText="Get Your Free AI Automation Roadmap" cmsMode={cmsMode} />
             </h2>
             <p className="text-lg md:text-xl text-gray-400 mb-8 leading-relaxed">
-              <CMSContent id="audit_desc" defaultText="Got a manual process? A software idea? A broken workflow? Hyperwrike fixes it. Book a free 30-min call — no commitment, no jargon." cmsMode={cmsMode} />
+              <CMSContent id="audit_desc" defaultText="A 30-minute working call with our founders. We'll audit one workflow, identify your highest-ROI automation, and send you a tailored roadmap — free, no sales pitch, no obligation." cmsMode={cmsMode} />
             </p>
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 flex items-center justify-center font-serif text-lg md:text-xl">1</div>
-                <p className="text-gray-300 text-sm md:text-base">Submit your biggest challenge</p>
+                <p className="text-gray-300 text-sm md:text-base">Tell us your biggest operational bottleneck</p>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 flex items-center justify-center font-serif text-lg md:text-xl">2</div>
-                <p className="text-gray-300 text-sm md:text-base">Our team audits your workflow</p>
+                <p className="text-gray-300 text-sm md:text-base">We audit the workflow and identify AI opportunities</p>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 flex items-center justify-center font-serif text-lg md:text-xl">3</div>
-                <p className="text-gray-300 text-sm md:text-base">Receive your custom roadmap</p>
+                <p className="text-gray-300 text-sm md:text-base">Receive a custom roadmap with ROI projections</p>
               </div>
+            </div>
+
+            {/* Alt contact CTA */}
+            <div className="mt-10 pt-10 border-t border-white/10 space-y-3 text-sm text-gray-400">
+              <p>Prefer email? <a href="mailto:team@hyperwrike.com" className="text-white underline underline-offset-4 hover:text-blue-400 transition-colors">team@hyperwrike.com</a></p>
+              <p>Or book directly on our <a href="https://calendar.app.google/WpbBqVNkm1YGfunz5" target="_blank" rel="noopener noreferrer" className="text-white underline underline-offset-4 hover:text-blue-400 transition-colors">Google Calendar</a></p>
             </div>
           </div>
           <div className="bg-white p-6 md:p-10 rounded-3xl text-black shadow-2xl">
-            <form className="space-y-4 md:space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div>
-                <label className="block text-sm font-bold mb-2">Name *</label>
-                <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors" required />
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-2">Business Email *</label>
-                <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors" required />
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-2">Biggest operational challenge? (one line)</label>
-                <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-colors" />
-              </div>
-              <button className="w-full py-4 bg-black text-white rounded-xl font-bold hover:scale-[1.02] transition-transform active:scale-95">
-                Book My Free Hyperwrike Call →
-              </button>
-              <p className="text-xs text-gray-500 text-center">
-                Free. Fast. No obligation.
-              </p>
-            </form>
+            <ContactForm />
           </div>
         </div>
       </section>
@@ -838,13 +1210,15 @@ export default function App() {
             </motion.div>
           </div>
 
-          {/* Right Side: Accordion */}
+          {/* Right Side: Accordion — PAA-aligned, matches FAQPage schema in index.html */}
           <div className="lg:col-span-7 flex flex-col gap-4">
             {[
-              { id: "faq_1", q: "What is Hyperwrike and how does it work?", a: "Hyperwrike is an intelligent AI automation agency designed to help you work smarter, not harder. We build custom software and automate repetitive tasks to streamline your entire operation." },
-              { id: "faq_2", q: "How fast can we see results?", a: "Most clients see significant operational cost savings within the first 90 days. Automations can often be deployed in as little as 2-4 weeks." },
-              { id: "faq_3", q: "Is my data private and secure?", a: "Absolutely. We prioritize security in every build. You own 100% of the code and data we create for you." },
-              { id: "faq_4", q: "Do I need any technical skills to use Hyperwrike?", a: "No. We handle all the technical heavy lifting. We build intuitive interfaces that your team can use without any specialized training." }
+              { id: "faq_1", q: "What is Hyperwrike and what does it do?", a: "Hyperwrike is an AI automation agency in Chennai that builds AI voice agents and workflow automation for US small businesses — including HVAC, dental, roofing, plumbing, and car rental companies. We help you never miss a lead and cut manual operations by 40–70%." },
+              { id: "faq_2", q: "How much does an AI voice agent cost for a small business?", a: "Hyperwrike builds AI voice agents starting under $1,000 setup with predictable monthly plans. Most clients recover the cost within the first 30–60 days from captured missed calls alone." },
+              { id: "faq_3", q: "How fast can Hyperwrike deploy an AI voice agent?", a: "Standard AI voice agent deployments go live in 2–4 weeks. Complex custom automations with CRM and telephony integrations typically take 4–8 weeks. Most clients see measurable operational savings within the first 90 days." },
+              { id: "faq_4", q: "Does Hyperwrike work with businesses outside Chennai?", a: "Yes. Hyperwrike is headquartered in Chennai, Tamil Nadu but primarily serves US small businesses in home services (HVAC, plumbing, roofing), dental clinics, and car rental operators. All delivery is fully remote." },
+              { id: "faq_5", q: "Do I own the code and automations Hyperwrike builds?", a: "Yes — 100% ownership. There is no vendor lock-in. All code, workflows, prompts, and integrations are handed over in full. You can host, modify, or migrate them anywhere, anytime." },
+              { id: "faq_6", q: "Is my data private and secure with Hyperwrike?", a: "Absolutely. Hyperwrike uses encrypted data pipelines, region-locked storage, and role-based access controls. We sign NDAs on request and never train third-party models on your private data." }
             ].map((faq, i) => (
               <motion.div
                 key={i}
@@ -873,6 +1247,9 @@ export default function App() {
       </section>
 
       <HoverFooter onLogoClick={() => setShowLogin(true)} />
+
+      {/* Floating AI chatbot — Groq-powered, server-proxied */}
+      <AIChatbot />
     </div>
   );
 }

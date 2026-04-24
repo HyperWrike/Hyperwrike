@@ -14,24 +14,35 @@ import { FooterBackgroundGradient } from "./ui/hover-footer";
 import { TextHoverEffect } from "./ui/hover-footer";
 
 function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
-  // Footer link data
+  // Footer link data — keyword-rich anchor text (Audit Hack #81)
   const footerLinks = [
     {
       title: "Services",
       links: [
-        { label: "AI Automation", href: "#services" },
-        { label: "Custom Software", href: "#services" },
+        { label: "AI Voice Agent Development", href: "#services" },
         { label: "Workflow Automation", href: "#services" },
-        { label: "AI Consulting", href: "#services" },
+        { label: "Custom AI Software", href: "#services" },
+        { label: "AI Consulting Chennai", href: "#services" },
+      ],
+    },
+    {
+      title: "Industries",
+      links: [
+        { label: "AI Voice Agent for HVAC", href: "#industries" },
+        { label: "AI Voice Agent for Dental", href: "#industries" },
+        { label: "AI Voice Agent for Roofing", href: "#industries" },
+        { label: "AI Voice Agent for Plumbing", href: "#industries" },
+        { label: "AI Voice Agent for Car Rental", href: "#industries" },
       ],
     },
     {
       title: "Company",
       links: [
-        { label: "About Us", href: "#benefits" },
-        { label: "Journal", href: "#trust" },
+        { label: "Why Hyperwrike", href: "#benefits" },
+        { label: "Client Results", href: "#trust" },
+        { label: "FAQ", href: "#faq" },
         {
-          label: "Reach Us",
+          label: "Book Free Call",
           href: "#audit",
           pulse: true,
         },
@@ -43,18 +54,13 @@ function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
   const contactInfo = [
     {
       icon: <Mail size={18} className="text-[#3ca2fa]" />,
-      text: "mounesh@hyperwrike.com",
-      href: "mailto:mounesh@hyperwrike.com",
-    },
-    {
-      icon: <Mail size={18} className="text-[#3ca2fa]" />,
-      text: "periyanan@hyperwrike.com",
-      href: "mailto:periyanan@hyperwrike.com",
+      text: "team@hyperwrike.com",
+      href: "mailto:team@hyperwrike.com",
     },
     {
       icon: <Phone size={18} className="text-[#3ca2fa]" />,
       text: "Book a Call",
-      href: "https://calendar.app.google/4CYGXdDEzK7Rq9ii8",
+      href: "https://calendar.app.google/WpbBqVNkm1YGfunz5",
     },
   ];
 
@@ -68,23 +74,29 @@ function HoverFooter({ onLogoClick }: { onLogoClick?: () => void }) {
   ];
 
   return (
-    <footer className="bg-[#0F0F11] relative h-fit overflow-hidden">
+    <footer className="bg-[#0F0F11] relative h-fit overflow-hidden" itemScope itemType="https://schema.org/Organization">
       <div className="max-w-7xl mx-auto p-8 md:p-14 z-40 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-16 pb-12">
-          {/* Brand section */}
-          <div className="flex flex-col space-y-4">
-            <div 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 md:gap-8 lg:gap-10 pb-12">
+          {/* Brand section — LLM-citation ready (Audit Hack #94) */}
+          <div className="flex flex-col space-y-4 lg:col-span-2">
+            <div
               className="flex items-center space-x-2 cursor-pointer group"
               onClick={onLogoClick}
             >
               <span className="text-[#3ca2fa] text-3xl font-extrabold group-hover:rotate-12 transition-transform">
                 <Zap className="w-8 h-8 fill-[#3ca2fa]" />
               </span>
-              <span className="text-white text-3xl font-bold font-serif">Hyperwrike</span>
+              <span className="text-white text-3xl font-bold font-serif" itemProp="name">Hyperwrike</span>
             </div>
-            <p className="text-sm leading-relaxed text-gray-400">
-              Hyperwrike is a modern AI Automation & Custom Software Agency. We build digital havens for deep work and pure flows.
+            <p className="text-sm leading-relaxed text-gray-400" itemProp="description">
+              <strong className="text-white">Hyperwrike is an AI automation agency in Chennai, Tamil Nadu</strong> that builds AI voice agents and workflow automation for US small businesses — HVAC, dental, roofing, plumbing, and car rental companies. We help service businesses never miss a lead and cut manual operations by 40–70%.
             </p>
+            {/* NAP block for local SEO (Audit Section 6.1) */}
+            <div className="text-xs text-gray-500 pt-3 border-t border-white/5 mt-2" itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+              <div className="font-semibold text-gray-400 mb-1">Hyperwrike</div>
+              <div><span itemProp="addressLocality">Chennai</span>, <span itemProp="addressRegion">Tamil Nadu</span> <span itemProp="addressCountry">India</span></div>
+              <div className="mt-1">Serving United States & India · Remote delivery worldwide</div>
+            </div>
           </div>
 
           {/* Footer link sections */}

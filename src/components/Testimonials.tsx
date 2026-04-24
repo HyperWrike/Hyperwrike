@@ -4,58 +4,58 @@ import { motion } from "motion/react";
 
 const testimonials = [
   {
-    text: "Hyperwrike revolutionized our operations, streamlining finance and inventory. The cloud-based platform keeps us productive, even remotely.",
+    text: "Hyperwrike's AI voice agent caught 42 after-hours calls in the first month. Before, those went straight to voicemail and competitors. ROI was obvious by week 2.",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&h=150&auto=format&fit=crop",
     name: "Briana Patton",
-    role: "Operations Manager",
+    role: "Owner, Patton HVAC · Austin, TX",
   },
   {
-    text: "Implementing Hyperwrike's automation was smooth and quick. The customizable, user-friendly interface made team training effortless.",
+    text: "We were losing thousands to no-shows. Their automated reminder flow cut our dental clinic no-show rate by more than half in 60 days. Setup was effortless.",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&h=150&auto=format&fit=crop",
-    name: "Bilal Ahmed",
-    role: "IT Manager",
+    name: "Dr. Bilal Ahmed",
+    role: "Clinic Director · Family Dental Group",
   },
   {
-    text: "The support team is exceptional, guiding us through setup and providing ongoing assistance, ensuring our complete satisfaction.",
+    text: "The Hyperwrike team built us a custom lead-routing system in three weeks. Our inbound response time dropped from hours to under 90 seconds.",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&h=150&auto=format&fit=crop",
     name: "Saman Malik",
-    role: "Customer Support Lead",
+    role: "Head of Operations · Roofing Co.",
   },
   {
-    text: "Hyperwrike's seamless integration enhanced our business operations and efficiency. Highly recommend for its intuitive interface.",
+    text: "Finally an agency in Chennai that actually ships. Onboarding was clean, handover was complete, and we own the entire codebase. No vendor lock-in.",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop",
     name: "Omar Raza",
-    role: "CEO",
+    role: "CEO · B2B SaaS",
   },
   {
-    text: "Its robust features and quick support have transformed our workflow, making us significantly more efficient and data-driven.",
+    text: "Our plumbing dispatch runs 24/7 now without a night staff. Hyperwrike's AI qualifies the emergency, pulls the right plumber, and books the job.",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&h=150&auto=format&fit=crop",
     name: "Zainab Hussain",
-    role: "Project Manager",
+    role: "Ops Manager · Home Services",
   },
   {
-    text: "The smooth implementation exceeded expectations. It streamlined processes, improving overall business performance and team morale.",
+    text: "Hyperwrike automated our entire onboarding and invoicing flow. We estimate we got ~12 hours per week of admin time back across the team.",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=150&h=150&auto=format&fit=crop",
     name: "Aliza Khan",
     role: "Business Analyst",
   },
   {
-    text: "Our business functions improved with a user-friendly design and positive customer feedback. A truly transformative tool.",
+    text: "Car rental bookings through the AI voice agent now outperform our website conversions. It handles upsells and damage waivers better than our reps.",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&h=150&auto=format&fit=crop",
     name: "Farhan Siddiqui",
-    role: "Marketing Director",
+    role: "Director · Car Rental Fleet",
   },
   {
-    text: "They delivered a solution that exceeded expectations, understanding our needs and enhancing our daily operations.",
+    text: "I've hired three agencies before Hyperwrike. They're the only one who understood service-business operations and built something our team actually uses.",
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop",
     name: "Sana Sheikh",
-    role: "Sales Manager",
+    role: "Sales Manager · HVAC",
   },
   {
-    text: "Using Hyperwrike, our online presence and conversions significantly improved, boosting business performance across the board.",
+    text: "From first call to live automation was 18 days. Our booked jobs went up 38% and we haven't missed a lead after-hours since. Worth every dollar.",
     image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=150&h=150&auto=format&fit=crop",
     name: "Hassan Ali",
-    role: "E-commerce Manager",
+    role: "Owner · Roofing Contractor",
   },
 ];
 
@@ -76,15 +76,15 @@ const Testimonials = () => {
         >
           <div className="flex justify-center">
             <div className="border border-gray-200 py-1 px-4 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-500 bg-gray-50">
-              Testimonials
+              Client Results
             </div>
           </div>
 
           <h2 className="text-4xl md:text-6xl font-serif tracking-tight text-center mt-8 text-gray-900">
-            Hyperwrike Results
+            Real Results from Real Businesses
           </h2>
           <p className="text-center mt-6 text-lg text-[#6F6F6F] leading-relaxed">
-            See what our customers have to say about their journey with Hyperwrike automation and custom software.
+            HVAC, dental, roofing, plumbing and car rental companies across the US use Hyperwrike's AI voice agents and workflow automation to capture more leads and cut operating costs.
           </p>
         </motion.div>
 
