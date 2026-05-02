@@ -714,6 +714,66 @@ export default function App() {
         </div>
       </header>
 
+      {/* Featured Testimonial — immediately after hero */}
+      <section id="featured-testimonial" className="py-16 md:py-20 px-6 md:px-8 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="rounded-3xl border border-gray-200 bg-gray-50 p-8 md:p-12 shadow-[0_30px_70px_-40px_rgba(0,0,0,0.25)]">
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-semibold uppercase tracking-wider text-[#6F6F6F] mb-6">
+                <Quote className="w-3.5 h-3.5 text-[#000000]" /> Client Transformation
+              </span>
+              <h2 className="text-3xl md:text-5xl font-serif text-[#000000]">
+                “Hyperwrike fixed the exact bottlenecks holding us back.”
+              </h2>
+            </div>
+
+            <blockquote className="max-w-4xl mx-auto">
+              <p className="text-lg md:text-xl leading-relaxed text-[#6F6F6F] text-center">
+                “Before Hyperwrike, our support was slow, our backend workflows were manual, and our website wasn’t converting.
+                They helped us launch an AI chatbot for faster customer response, automated the repetitive backend work, and rebuilt
+                our website around conversion. The biggest win? We got enterprise-level execution without hiring a large team or paying agency overhead.”
+              </p>
+            </blockquote>
+
+            <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="rounded-2xl bg-white border border-gray-200 p-6">
+                <div className="text-xs font-bold uppercase tracking-wider text-[#6F6F6F] mb-2">Support</div>
+                <p className="text-sm md:text-base text-[#000000] leading-relaxed">
+                  Slow response times <strong>→</strong> AI chatbot-enabled instant replies
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white border border-gray-200 p-6">
+                <div className="text-xs font-bold uppercase tracking-wider text-[#6F6F6F] mb-2">Operations</div>
+                <p className="text-sm md:text-base text-[#000000] leading-relaxed">
+                  Manual backend tasks <strong>→</strong> automated workflows
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white border border-gray-200 p-6">
+                <div className="text-xs font-bold uppercase tracking-wider text-[#6F6F6F] mb-2">Growth</div>
+                <p className="text-sm md:text-base text-[#000000] leading-relaxed">
+                  Low-converting site <strong>→</strong> conversion-focused rebuild
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={() => scrollTo('audit')}
+                className="rounded-full px-10 py-4 text-base font-medium bg-[#000000] text-white transition-transform hover:scale-[1.03] active:scale-95 flex items-center gap-2"
+              >
+                Book a Strategy Call <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => scrollTo('trust')}
+                className="rounded-full px-8 py-4 text-base font-medium bg-transparent text-[#000000] border border-black/20 hover:bg-black hover:text-white transition-colors"
+              >
+                See More Client Results
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Strip Section */}
       <section className="py-16 md:py-20 px-6 md:px-8 bg-gray-50 border-y border-gray-100">
         <div className="max-w-4xl mx-auto text-center">
