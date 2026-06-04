@@ -1,0 +1,79 @@
+/* ============================================================
+   HYPERWRIKE — BRAND TOKENS
+   Drop this into any project and `@import` or <link> it.
+   Every Hyperwrike design should build on these variables.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root{
+  /* ---- Core palette ---- */
+  --hw-ink:#0B0D10;          /* primary dark — backgrounds, text */
+  --hw-ink-2:#14171D;        /* raised dark surface */
+  --hw-ink-3:#1E222A;        /* dark borders / muted dark fills */
+  --hw-bone:#F1EDE3;         /* warm light — page background */
+  --hw-bone-2:#E7E2D5;       /* deeper bone — alt sections */
+  --hw-paper:#FFFFFF;        /* cards on bone */
+
+  /* ---- Signal (accent) ---- */
+  --hw-lime:#C8EF4A;         /* primary signal — CTAs, highlights */
+  --hw-lime-2:#D7F76A;       /* lime hover */
+  --hw-lime-deep:#A9D62B;    /* lime on light bg (AA-safe accents) */
+
+  /* ---- Text ---- */
+  --hw-tx:#0B0D10;
+  --hw-tx-soft:#54514A;
+  --hw-tx-mute:#8A867C;
+  --hw-tx-on-ink:#F1EDE3;
+  --hw-tx-on-ink-soft:#9DA1A8;
+
+  /* ---- Lines ---- */
+  --hw-line:rgba(11,13,16,.12);
+  --hw-line-soft:rgba(11,13,16,.07);
+  --hw-line-ink:rgba(241,237,227,.13);
+
+  /* ---- Elevation ---- */
+  --hw-shadow-sm:0 1px 2px rgba(11,13,16,.06), 0 1px 0 rgba(11,13,16,.03);
+  --hw-shadow-md:0 18px 40px -20px rgba(11,13,16,.28);
+  --hw-shadow-lg:0 50px 120px -40px rgba(11,13,16,.45);
+
+  /* ---- Radius ---- */
+  --hw-r-sm:12px;
+  --hw-r-md:18px;
+  --hw-r-lg:28px;
+  --hw-r-xl:40px;
+
+  /* ---- Type families ---- */
+  --hw-ff-display:'Bricolage Grotesque', sans-serif;  /* headlines, wordmark */
+  --hw-ff-body:'Hanken Grotesk', sans-serif;          /* body copy, UI */
+  --hw-ff-serif:'Instrument Serif', serif;            /* editorial italic accents */
+  --hw-ff-mono:'JetBrains Mono', monospace;           /* eyebrows, labels, data */
+
+  /* ---- Layout ---- */
+  --hw-maxw:1240px;
+}
+
+/* ---------- Logo lockup helper ---------- */
+.hw-logo{display:inline-flex;align-items:center;gap:11px;}
+.hw-logo .hw-mark{width:34px;height:34px;flex-shrink:0;color:var(--hw-ink);}
+.hw-logo .hw-wm{font-family:var(--hw-ff-display);font-weight:700;font-size:21px;letter-spacing:-.03em;color:var(--hw-ink);}
+.hw-logo.on-ink .hw-mark{color:var(--hw-bone);}
+.hw-logo.on-ink .hw-wm{color:var(--hw-bone);}
+
+/* ---------- Buttons ---------- */
+.hw-btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--hw-ff-body);font-weight:600;font-size:15px;
+  border-radius:100px;padding:13px 14px 13px 24px;border:none;cursor:pointer;
+  transition:transform .25s cubic-bezier(.2,.7,.3,1), background .2s, color .2s, border-color .2s;}
+.hw-btn:active{transform:scale(.97);}
+.hw-btn--dark{background:var(--hw-ink);color:var(--hw-tx-on-ink);}
+.hw-btn--dark:hover{transform:translateY(-2px);}
+.hw-btn--lime{background:var(--hw-lime);color:var(--hw-ink);}
+.hw-btn--lime:hover{transform:translateY(-2px);background:var(--hw-lime-2);}
+.hw-btn--ghost{background:transparent;color:var(--hw-tx);border:1px solid var(--hw-line);}
+.hw-btn--ghost:hover{border-color:var(--hw-ink);}
+
+/* ---------- Eyebrow (mono kicker) ---------- */
+.hw-eyebrow{font-family:var(--hw-ff-mono);font-size:12px;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--hw-tx-mute);display:inline-flex;align-items:center;gap:.6em;}
+.hw-eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--hw-lime-deep);
+  box-shadow:0 0 0 4px rgba(169,214,43,.18);}

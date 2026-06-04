@@ -1,0 +1,20 @@
+services:
+  hyperwrike-site:
+    build: .
+    image: hyperwrike-site:latest
+    container_name: hyperwrike-site
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PORT=8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ./data:/app/data
+    networks:
+      - proxy-net
+
+networks:
+  proxy-net:
+    external: true
