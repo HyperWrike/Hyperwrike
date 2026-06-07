@@ -1,0 +1,45 @@
+# Hyperwrike
+
+> AI systems agency. We build custom AI voice agents, CRM automation, lead generation, and ecommerce AI for businesses in India, UK, US and Europe.
+
+## What we build
+
+- **AI Voice Calling Agent**: 24/7 AI receptionist that answers calls, qualifies callers, books appointments, and runs outbound reminders in natural conversation — including Tanglish. Proven to reduce no-shows by 40% (VS Hospitals, Chennai).
+- **AI Chatbot & Conversational AI**: Intelligent sales agent for website, WhatsApp, and social media — qualifies leads, handles objections, captures contact details, 3× more leads captured.
+- **Ecommerce AI Platform**: Recommendation engine, abandoned-cart recovery, and dormant-customer re-engagement running on autopilot.
+- **Custom CRM & Operations AI**: Bespoke CRM replacing spreadsheets and manual admin — payments, compliance, live dashboards. Saves 100+ hours/month (Pannasuna Chit Funds, India).
+- **AI Lead Generation & SDR**: Automated outbound system that finds ideal customers, personalises outreach, and books discovery calls — 60–80% lower cost per meeting than a human SDR.
+
+## Who we serve
+
+Industries: hospitals & clinics, dental & physio, law firms, financial services (chit funds, NBFCs), ecommerce, B2B SaaS, professional services.
+Regions: India (live systems deployed), United Kingdom, United States, Europe.
+
+## Key facts
+
+- Systems go live in approximately 21 days
+- Every system ships with a reporting layer showing hours saved, revenue recovered, calls handled — every week
+- Clients own the system: fully documented, trainable, yours forever
+- Ongoing retainer: Hyperwrike monitors, optimises, and expands as your business grows
+- Guarantee: every system pays for itself within 60–90 days or we keep working
+- Founded: 2024 | HQ: Chennai, Tamil Nadu, India
+
+## Proven results
+
+- VS Hospitals (Chennai): 40% fewer no-shows, zero missed after-hours calls
+- Pannasuna Chit Funds (India): 100+ hours saved per month, zero missed follow-ups
+
+## Contact
+
+- Book a free 20-minute strategy call: https://calendar.app.google/BQf3Egpa9gxmyxPb8
+- Email: team@hyperwrike.com
+- WhatsApp: +91 94444 20367 or +91 89780 27188
+
+## Pages
+
+- Homepage: https://hyperwrike.com/
+- AI Voice Receptionist: https://hyperwrike.com/blog/ai-voice-receptionist-missed-calls.html
+- Reduce Patient No-Shows: https://hyperwrike.com/blog/reduce-patient-no-shows-ai.html
+- Custom CRM for Chit Funds: https://hyperwrike.com/blog/custom-crm-chit-funds.html
+- AI SDR & Lead Generation: https://hyperwrike.com/blog/ai-sdr-b2b-lead-generation.html
+- Law Firm AI Intake: https://hyperwrike.com/blog/law-firm-ai-intake-software.html
