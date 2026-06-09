@@ -446,35 +446,99 @@
       <span class="eyebrow">Testimonials</span>
       <h2 class="h-sec">Hear it from the<br />operators we build for.</h2>
     </div>
-    <div class="testi-grid">
-      <div class="testi-video reveal">
-        <div class="video-frame">
-          <video controls playsinline preload="metadata" poster="/assets/logo/hyperwrike-mark-dark-1024.png" style="width:100%;height:100%;object-fit:cover;background:#0B0D10;border:0;">
-            <source src="/assets/client-testimonial.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div class="video-cap">
-          <span class="vc-dot"></span>
-          Watch how a single AI system recovered <b>100+ working hours a month</b> and stopped the revenue leak.
-        </div>
-      </div>
-      <div class="testi-quotes reveal">
-        <figure class="tquote">
-          <blockquote>"We went from running the business inside spreadsheets to actually managing it. The system does in seconds what used to take our team hours."</blockquote>
-          <figcaption><b>Pannasuna Management</b><span>Custom CRM · Chit Funds, India</span></figcaption>
-        </figure>
-        <figure class="tquote">
-          <blockquote>"The agent handles our patients the way our own staff would — in their language, with patience, and without ever missing a call."</blockquote>
-          <figcaption><b>VS Hospitals</b><span>AI Voice Agent · Chennai, India</span></figcaption>
-        </figure>
-        <div class="testi-stat">
-          <div class="ts"><div class="tsv" data-count="100" data-suffix="+">0</div><div class="tsk">hours saved / month</div></div>
-          <div class="ts"><div class="tsv" data-count="40" data-suffix="%">0</div><div class="tsk">fewer no-shows</div></div>
-          <div class="ts"><div class="tsv">24/7</div><div class="tsk">coverage, zero missed calls</div></div>
-        </div>
+<div style="display:flex;flex-direction:column;gap:32px;margin-top:52px;">
+
+  <!-- Videos -->
+  <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;">
+
+    <div style="width:280px;max-width:100%;border-radius:24px;overflow:hidden;background:#0B0D10;box-shadow:0 10px 30px rgba(0,0,0,.15);">
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="/assets/logo/hyperwrike-mark-dark-1024.png"
+        style="width:100%;display:block;aspect-ratio:9/16;object-fit:cover;"
+        onplay="document.querySelectorAll('.testimonial-video').forEach(v=>{if(v!==this){v.pause();v.currentTime=0;}})"
+        class="testimonial-video"
+      >
+        <source src="/assets/client-testimonial.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div style="width:280px;max-width:100%;border-radius:24px;overflow:hidden;background:#0B0D10;box-shadow:0 10px 30px rgba(0,0,0,.15);">
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="/assets/logo/hyperwrike-mark-dark-1024.png"
+        style="width:100%;display:block;aspect-ratio:9/16;object-fit:cover;"
+        onplay="document.querySelectorAll('.testimonial-video').forEach(v=>{if(v!==this){v.pause();v.currentTime=0;}})"
+        class="testimonial-video"
+      >
+        <source src="/assets/client-testimonial-1.mp4" type="video/mp4">
+      </video>
+    </div>
+
+  </div>
+
+  <!-- Caption -->
+  <div style="display:flex;justify-content:center;">
+    <div style="display:flex;align-items:flex-start;gap:12px;max-width:700px;text-align:center;">
+      <span style="width:9px;height:9px;border-radius:50%;background:#C6EA3F;flex-shrink:0;margin-top:7px;"></span>
+      <div style="font-size:15px;line-height:1.6;">
+        Watch how a single AI system recovered
+        <b>100+ working hours a month</b>
+        and stopped the revenue leak.
       </div>
     </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;">
+
+    <figure style="margin:0;background:white;border-radius:18px;padding:24px;">
+      <blockquote style="margin:0;font-size:20px;line-height:1.5;font-style:italic;">
+        "We went from running the business inside spreadsheets to actually managing it. The system does in seconds what used to take our team hours."
+      </blockquote>
+      <figcaption style="margin-top:16px;">
+        <b>Pannasuna Management</b><br>
+        <span style="font-size:13px;opacity:.7;">Custom CRM · Chit Funds, India</span>
+      </figcaption>
+    </figure>
+
+    <figure style="margin:0;background:white;border-radius:18px;padding:24px;">
+      <blockquote style="margin:0;font-size:20px;line-height:1.5;font-style:italic;">
+        "The agent handles our patients the way our own staff would — in their language, with patience, and without ever missing a call."
+      </blockquote>
+      <figcaption style="margin-top:16px;">
+        <b>VS Hospitals</b><br>
+        <span style="font-size:13px;opacity:.7;">AI Voice Agent · Chennai, India</span>
+      </figcaption>
+    </figure>
+
+  </div>
+
+  <!-- Stats -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;">
+
+    <div style="background:#0B0D10;color:white;border-radius:18px;padding:20px;">
+      <div style="font-size:32px;font-weight:700;color:#C6EA3F;">100+</div>
+      <div style="font-size:13px;opacity:.8;">hours saved / month</div>
+    </div>
+
+    <div style="background:#0B0D10;color:white;border-radius:18px;padding:20px;">
+      <div style="font-size:32px;font-weight:700;color:#C6EA3F;">40%</div>
+      <div style="font-size:13px;opacity:.8;">fewer no-shows</div>
+    </div>
+
+    <div style="background:#0B0D10;color:white;border-radius:18px;padding:20px;">
+      <div style="font-size:32px;font-weight:700;color:#C6EA3F;">24/7</div>
+      <div style="font-size:13px;opacity:.8;">coverage, zero missed calls</div>
+    </div>
+
+  </div>
+
+</div>
   </div>
 </section>
 

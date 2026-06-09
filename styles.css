@@ -520,13 +520,7 @@ h1,h2,h3,h4{font-family:var(--ff-display);font-weight:600;margin:0;line-height:1
    TESTIMONIALS
    ============================================================ */
 .testimonials{background:var(--bone-2);}
-.testi-grid{display:grid;grid-template-columns:1fr;gap:30px;margin-top:52px;align-items:start;}
-@media(min-width:920px){.testi-grid{grid-template-columns:1.25fr 1fr;gap:40px;}}
-.video-frame{position:relative;width:100%;padding-top:56.25%;border-radius:var(--r-lg);overflow:hidden;
-  background:var(--ink);box-shadow:var(--shadow-md);border:1px solid var(--line);}
-.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
-.video-cap{display:flex;gap:12px;align-items:flex-start;margin-top:18px;font-size:15px;color:var(--tx-soft);max-width:46ch;}
-.video-cap b{color:var(--ink);font-weight:600;}
+
 .vc-dot{width:9px;height:9px;border-radius:50%;background:var(--lime-deep);flex-shrink:0;margin-top:6px;box-shadow:0 0 0 4px rgba(169,214,43,.18);}
 .testi-quotes{display:flex;flex-direction:column;gap:16px;}
 .tquote{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:24px;}
