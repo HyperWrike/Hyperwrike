@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Disallow: /node_modules/
+Disallow: /server/
+Disallow: /.env
+Disallow: /data/
+
+# AI crawlers — explicit access for Generative Engine Optimization
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+Sitemap: https://hyperwrike.com/sitemap.xml
