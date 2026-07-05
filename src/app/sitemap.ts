@@ -14,9 +14,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Offer pages
-  const offerRoutes = offers.map((offer) => ({
-    url: `${baseUrl}/offers/${offer.slug}`,
+  // Service pages
+  const serviceRoutes = offers.map((offer) => ({
+    url: `${baseUrl}/services/${offer.slug}`,
     lastModified: new Date('2026-07-04'),
     changeFrequency: 'monthly' as const,
     priority: 0.9,
@@ -38,5 +38,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...routes, ...offerRoutes, ...blogRoutes]
+  return [...routes, ...serviceRoutes, ...blogRoutes]
 }
