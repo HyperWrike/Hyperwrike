@@ -479,6 +479,23 @@
       </video>
     </div>
 
+    <div style="width:280px;max-width:100%;border-radius:24px;overflow:hidden;background:#0B0D10;box-shadow:0 10px 30px rgba(0,0,0,.15);">
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="/assets/logo/hyperwrike-mark-dark-1024.png"
+        style="width:100%;display:block;aspect-ratio:9/16;object-fit:cover;"
+        onplay="document.querySelectorAll('.testimonial-video').forEach(v=>{if(v!==this){v.pause();v.currentTime=0;}})"
+        class="testimonial-video"
+      >
+        <source src="/assets/client-testimonial-2.mp4" type="video/mp4">
+      </video>
+      <div style="padding: 12px; color: white; text-align: center; font-size: 14px; font-weight: 500;">
+        Castrix sales and service
+      </div>
+    </div>
+
   </div>
 
   <!-- Caption -->
