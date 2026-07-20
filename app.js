@@ -275,4 +275,57 @@
     }, { passive: true });
   })();
 
+  /* ---------- testimonial video carousel ---------- */
+  (function () {
+    var track = document.querySelector('.testimonial-carousel-track');
+    if (!track) return;
+
+    var originalCards = Array.from(track.children);
+    if (originalCards.length === 0) return;
+
+    // Clone the set of cards twice to ensure seamless infinite scrolling even on large screens
+    for (var i = 0; i < 2; i++) {
+      originalCards.forEach(function (card) {
+        var clone = card.cloneNode(true);
+        track.appendChild(clone);
+      });
+    }
+
+    // Add scrolling class to trigger CSS keyframe animation
+    track.classList.add('scrolling');
+
+    // Set up hover-to-play, hover-to-scale, and click-to-mute/unmute
+    var cards = track.querySelectorAll('.testimonial-video-card');
+    cards.forEach(function (card) {
+      var video = card.querySelector('video');
+      if (!video) return;
+
+      video.loop = true;
+      video.playsInline = true;
+      video.controls = false;
+
+      // Hover controls
+      card.addEventListener('mouseenter', function () {
+        video.muted = false; // Attempt to play with sound
+        video.play().catch(function (err) {
+          console.warn("Testimonial video play with sound blocked. Falling back to muted:", err);
+          video.muted = true;
+          video.play().catch(function(e) {
+             console.warn("Muted playback also blocked:", e);
+          });
+        });
+      });
+
+      card.addEventListener('mouseleave', function () {
+        video.pause();
+      });
+
+      // Click to toggle mute/unmute
+      card.addEventListener('click', function () {
+        video.muted = !video.muted;
+      });
+    });
+  })();
+
 })();
+
