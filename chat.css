@@ -64,9 +64,21 @@
 
 /* quick-reply chips */
 .hw-chips{ display:flex; flex-wrap:wrap; gap:8px; padding:0 16px 14px; }
+.hw-chips-multi{ padding:2px 16px 10px; }
 .hw-chip{ font-size:12.5px; padding:8px 12px; border-radius:999px; cursor:pointer;
   background:#fff; border:1px solid var(--line,rgba(11,13,16,.14)); color:var(--tx,#0B0D10); transition:.15s; }
 .hw-chip:hover{ border-color:var(--ink,#0B0D10); transform:translateY(-1px); }
+
+/* info cards inside chat */
+.hw-card{ margin:0 16px 10px; padding:12px 14px; border-radius:12px;
+  background:#fff; border:1px solid var(--line,rgba(11,13,16,.12));
+  box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.hw-card-h{ font-size:13px; font-weight:700; margin-bottom:6px; color:var(--ink,#0B0D10); line-height:1.4; }
+.hw-card-l{ font-size:12.5px; line-height:1.5; color:var(--tx-soft,#5A5E64); margin-bottom:3px; }
+.hw-card-l:last-of-type{ margin-bottom:0; }
+.hw-card-a{ display:inline-block; margin-top:8px; font-size:12px; font-weight:600;
+  color:var(--lime-deep,#7CB80A); text-decoration:none; }
+.hw-card-a:hover{ text-decoration:underline; }
 
 /* typing indicator */
 .hw-typing{ align-self:flex-start; display:flex; gap:4px; padding:13px 15px; background:#fff;
