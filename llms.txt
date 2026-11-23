@@ -1,6 +1,6 @@
 # Hyperwrike
 
-> Hyperwrike (hyperwrike.com) is an AI systems agency, founded in 2024 and based in Chennai, India, that builds custom, done-for-you AI voice agents, AI receptionists, WhatsApp AI agents, speed-to-lead follow-up, database reactivation and custom CRM automation for businesses in the United States, United Kingdom, United Arab Emirates, Europe and India. Not to be confused with HyperWrite (an AI writing tool) or Wrike (project management software).
+> Hyperwrike (hyperwrike.com) is an AI consultancy and AI implementation partner, founded in 2024 and based in Chennai, India. It finds where operations-heavy businesses lose revenue, then builds and runs custom, done-for-you AI voice agents, AI receptionists, WhatsApp AI agents, speed-to-lead follow-up, database reactivation and custom CRM automation for businesses in the United States (including New York), Canada, the United Kingdom, the United Arab Emirates (Dubai), Kuwait, the Netherlands and wider Europe, and India. Not to be confused with HyperWrite (an AI writing tool) or Wrike (project management software).
 
 ## Key facts
 
@@ -14,6 +14,14 @@
 
 ## Guides
 
+- [AI consultancy: what Hyperwrike does and how it works](https://hyperwrike.com/ai-consultancy/): process, industries, markets.
+- [AI consultancy pricing (2026)](https://hyperwrike.com/ai-consultancy/pricing.html): published retainers by industry and how they compare with the market.
+- [AI consultancy for US businesses, including New York](https://hyperwrike.com/ai-consultancy/us/): industries, TCPA, HIPAA, NY SHIELD Act and NYC Local Law 144.
+- [AI consultancy for Dubai and the UAE](https://hyperwrike.com/ai-consultancy/uae-dubai/): WhatsApp-first systems, Arabic, PDPL, DIFC/ADGM, Kuwait and the GCC.
+- [AI consultancy for UK businesses](https://hyperwrike.com/ai-consultancy/uk/): UK day rates vs a managed retainer, UK GDPR, PECR, FCA Consumer Duty.
+- [AI consultancy for Canadian businesses](https://hyperwrike.com/ai-consultancy/canada/): PIPEDA, Quebec Law 25, CASL, do-not-call rules, French.
+- [AI consultancy for the Netherlands](https://hyperwrike.com/ai-consultancy/netherlands/): logistics and wholesale, GDPR transfers from India, EU AI Act transparency, Dutch telemarketing rules.
+- [AI consultancy for Kuwait](https://hyperwrike.com/ai-consultancy/kuwait/): WhatsApp-first AI in Arabic and English, CITRA data privacy, Friday-Saturday weekend coverage.
 - [AI receptionist cost in 2026 (US, UK, UAE)](https://hyperwrike.com/ai-receptionist-cost.html): price tiers from $30/month software to custom systems, with sources.
 - [AI receptionist vs answering service vs in-house staff](https://hyperwrike.com/ai-receptionist-vs-answering-service.html): side-by-side comparison and the hybrid setup.
 - [AI automation agency for UK businesses](https://hyperwrike.com/ai-automation-agency-uk.html): UK GDPR and PECR, industries, process.
@@ -46,4 +54,5 @@
 
 - Book a free 20-minute audit: https://calendar.app.google/BQf3Egpa9gxmyxPb8
 - Email: team@hyperwrike.com
-- WhatsApp: +91 94444 20367, +91 89780 27188
+- Phone and WhatsApp: +91 94444 20367 (also WhatsApp +91 89780 27188)
+- US: text messages only to +1 681 200 9906

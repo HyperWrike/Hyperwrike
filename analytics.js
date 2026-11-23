@@ -40,5 +40,16 @@
     else if (h.indexOf('calendar.app.google') !== -1) window.hwTrack('calendar_click', { page: location.pathname });
     else if (h.indexOf('mailto:') === 0) window.hwTrack('email_click', { page: location.pathname });
     else if (h.indexOf('tel:') === 0) window.hwTrack('phone_click', { page: location.pathname });
+    else if (h.indexOf('sms:') === 0) window.hwTrack('sms_click', { page: location.pathname });
   }, true);
+})();
+
+// Sitewide click-to-call + WhatsApp bar (added 2026-11-23). Every page loads this file,
+// so loading the bar from here puts it on every page without editing any HTML.
+(function () {
+  if (document.querySelector('script[src*="contact-cta.js"]')) return;
+  var s = document.createElement('script');
+  s.src = '/contact-cta.js?v=20261123';
+  s.defer = true;
+  (document.head || document.documentElement).appendChild(s);
 })();
